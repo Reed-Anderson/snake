@@ -1,5 +1,7 @@
 // Snake.js
 
+
+
 /** @class Snake
   * The snake in a Snake game
   */
@@ -13,12 +15,32 @@ export default class Snake {
       });
     }
     this.direction = 'right';
+    // bind class mehods
+    this.update = this.update.bind(this);
+    this.render = this.render.bind(this);
   }
   update() {
-    // Did we smack a wall?
-    // Did we eat ourselves?
-    // Did we eat food?
-    // Do we need to grow?
+    var x = this.body[0].x;
+    var y = this.body[0].y;
+    switch(this.direction) {
+      case 'right':
+        x++;
+        break;
+      case 'left':
+        x--;
+        break;
+      case 'up':
+        y--;
+        break;
+      case 'down':
+        y++;
+        break;
+    }
+    // If we move off-board, game is over
+    if(x < 0 || x > this.width || y < 0 || y > this.height)
+      return this.gameOver();
+    this.body.pop();
+    this.body.unshift({x: x, y: y});
   }
   /** @function render
     * Render the snake
